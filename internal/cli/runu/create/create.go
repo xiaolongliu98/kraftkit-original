@@ -132,12 +132,22 @@ func (opts *CreateOptions) Run(ctx context.Context, args []string) (retErr error
 			return fmt.Errorf("getting pid file abs path: %w", err)
 		}
 	}
+	fmt.Println("[xiaolong log 1] pidFile", pidFile)
+	fmt.Println("[xiaolong log 2] bundle", opts.Bundle)
+	fmt.Println("[xiaolong log 3] args", args)
+	fmt.Println("[xiaolong log 4] rootDir", opts.rootDir)
 
 	if err = os.Chdir(opts.Bundle); err != nil {
 		return fmt.Errorf("changing working dir to OCI bundle: %w", err)
 	}
 
 	spec, err := loadSpec()
+	fmt.Println("[xiaolong log 5] spec", spec)
+	dir, _ := os.ReadDir(".")
+	for _, v := range dir {
+		fmt.Println("[xiaolong log 6] dir", v.Name())
+	}
+
 	if err != nil {
 		return fmt.Errorf("loading runtime spec: %w", err)
 	}
